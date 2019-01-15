@@ -11,12 +11,15 @@ library (plyr)
 # function to analyse stop-signal data at once...
   funcSignal <- function(data){
     
-    # signal data: prespond, ssd, and true SSRT
+    # signal data: prespond, ssd, true SSRT, and signal-respond RT
     signal <- subset(data, signals == 'signal')
     presp <-  mean(signal$resp)
     ssd <- mean(signal$used.ssd)
     SSRTtrue <- mean(signal$SSRT.true)
     
+    signal.resp <- subset(signal, resp == '1')
+    signal.resp.rt <- mean(signal.resp$RT.true)
+      
     # no signal data: with and without missed responses
     # for the missed responses, set RT to max RT of the subject/condition
     nosignal <- subset(data, signals == 'nosignal')
@@ -66,12 +69,20 @@ library (plyr)
     SSRTmean_diff <- SSRTmean - SSRTtrue # calculate the difference with the true SSRT
     
     # ------------------------------------------------------------------------------
+    # Also calculate no-signal RT for go trials with a response, 
+    # and the difference with signal-respond RT
+    # ------------------------------------------------------------------------------
+    nosignal.resp.rt <- mean(nosignal_resp$RT.true)
+    race.check <- nosignal.resp.rt - signal.resp.rt
+    
+    # ------------------------------------------------------------------------------
     # Return all data
     # ------------------------------------------------------------------------------
     return(data.frame(presp = presp, pmiss = pmiss, presp_adj = presp_adj, ssd = ssd, SSRTtrue = SSRTtrue, 
                       nthRT_all = nthRT_all, nthRT_resp = nthRT_resp, nthRT_adj = nthRT_adj,
                       SSRTall = SSRTall, SSRTresp = SSRTresp, SSRTadj = SSRTadj, SSRTmean = SSRTmean,
-                      SSRTall_diff = SSRTall_diff, SSRTresp_diff = SSRTresp_diff, SSRTadj_diff = SSRTadj_diff, SSRTmean_diff = SSRTmean_diff))
+                      SSRTall_diff = SSRTall_diff, SSRTresp_diff = SSRTresp_diff, SSRTadj_diff = SSRTadj_diff, SSRTmean_diff = SSRTmean_diff,
+                      sRT = signal.resp.rt, goRT = nosignal.resp.rt, raceCheck = race.check))
   }
 
   
@@ -110,4 +121,31 @@ for (i in files) {
   filename <- sprintf ("./processed_data/output_Ntrials_%d_RTtau_%d_RTmiss_%d.csv", N, Tau, Pm)
   write.csv (signal.cast, file = filename, row.names=FALSE)
 }
+
+
+# create a new data frame to combine all the data
+data <- data.frame() 
+
+# determine how many processed data files we have 
+files <- dir(path='./processed_data', pattern='*.Rdata') 
+
+# load the files and combine them
+for (i in files) {
+  name <- paste("./processed_data/", i, sep = "") # path to the file
+  load(name) # load the file
   
+  # add the content to the data frame
+  data <- rbind (data, signal.cast)
+  rm(signal.cast) 
+}
+
+# reorder levels pmissReq and tau
+data$pmissReq = factor(data$pmissReq,levels(data$pmissReq)[c(1,5,2,3,4)])
+data$tau = factor(data$tau,levels(data$tau)[c(1,5,2,3,4)])
+
+# create numeric version of the subject factor; will be used in some analyser functions
+data$subjectNum <- as.numeric(data$subject)
+
+# save the combined data file
+save (data, file = './processed_data/combined_individual_data.Rdata')
+
