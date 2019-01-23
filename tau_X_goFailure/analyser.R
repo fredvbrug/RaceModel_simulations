@@ -1,233 +1,176 @@
 # -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
 # script to process the SSRT estimates
 # -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
 
-# clear everything
-rm(list = ls()) 
+rm(list = ls()) # clear everything
+library (ggplot2) # library to plot the data
+library (reshape) # library required for melting data
+library (plyr) # library for ddply
+library (cowplot) # library to combine plots
 
-# load libraries
-library (ggplot2) # to plot the data
-library (doBy) # for data summaries
-library (reshape) # to melt and cast data
-library (reshape2) # to melt and cast data
-library (plyr)
-library (Hmisc)
+# load the file with all processed data
+load('./processed_data/combined_individual_data.Rdata') # individual data
 
+# exclude subjects when signal-respond RT > no-signal RT
+data$violation <- ifelse(data$raceCheck > 0, 0, 1) 
+data.old <- data # keep a copy of the full data set though
+data <- subset(data, violation == 0)
 
-# load the combined file with all processed data
-load('./processed_data/combined_individual_data.Rdata')
-
-# also create a version with the p(miss) = .20 data excluded
-# (as the bias becomes too extreme for some estimation methods; esp. the respOnly and Tannock method)
-data.subset <- subset(data, pmissReq %nin% c('20'))
-
-# -----------------------------------------------------------------------------
-# STEP: put the individual data in long format to compare the methods etc. 
-# -----------------------------------------------------------------------------
-indiv.long <- melt(data.subset,
-                  id.vars=c("subject", "Ntrials", "pmissReq", "tau"), # ID variables - all the variables to keep but not split apart on
-                  measure.vars=c("SSRTall_diff", "SSRTresp_diff", "SSRTadj_diff", "SSRTmean_diff" ) # The source columns
-)
-
-# rename a few things
-colnames(indiv.long) <- c('subject', 'ntrials', 'pmiss', 'tau', 'e_method', 'SSRT_diff') 
+# put the individual data in long format as well
+indiv.long <- melt(data,
+                   id.vars=c("subject", "Ntrials", "pmissReq", "tau"), # ID variables - all the variables to keep but not split apart on
+                   measure.vars=c("SSRTall_diff", "SSRTresp_diff", "SSRTadj_diff", "SSRTmean_diff" )) # The source columns
+colnames(indiv.long)[5:6] <- c('e_method', 'SSRT_diff') # change a few names
 levels(indiv.long$e_method) <- c('standard', 'respOnly', 'prespAdj', 'mean')
 
-# -----------------------------------------------------------------------------
-# STEP: check the estimation methods show consistent biases:
-# we use the averages for this (with N = 1000) and plot the outcome as heat maps
-# -----------------------------------------------------------------------------
-tic()
-SSRT.diff.cast <- cast (indiv.long, ntrials * tau * pmiss * e_method ~ ., mean, value='SSRT_diff') 
-names(SSRT.diff.cast)[5] <- "SSRT_diff"
-toc()
-
-tic()
-test <- ddply(indiv.long, .(ntrials, tau, pmiss, e_method), summarise, SSRT_diff=mean(SSRT_diff))
-toc()
-
-
-
-text.tmp <- summaryBy(SSRT_diff ~ e_method*ntrials, data=as.data.frame(SSRT.diff.cast),  FUN=sd)
-text.tmp$label <- paste("SD = ", round(text.tmp$SSRT_diff.sd), "ms")
-  
-# for the heat maps, we will manually set the range (to ensure that 0 is in the middle)
-tmp <- abs(SSRT.diff.cast$SSRT_diff)
-li <- c(-max(tmp), max(tmp))
-
-h.plot <- ggplot(data = SSRT.diff.cast, aes(x = tau, y = pmiss)) +
-  geom_raster(aes(fill = SSRT_diff), interpolate = TRUE) +
-  scale_fill_gradientn(colours = c("blue", "white", "red"),limits =li)+
-  facet_grid(ntrials~e_method, labeller = label_both)+
-  geom_text(data=text.tmp, aes(x=2, y=1, label = label), 
-            colour="black", inherit.aes=FALSE, parse=FALSE)
-
-h.plot 
-
-# create pdf version as well
-pdf("./summary_data/heat_plot.pdf", paper="a4")
-h.plot
-dev.off()
-
-# -------------------------------------------------------------------------------
-# STEP: show for the distance between 0.025 and 0.975 quantiles (using heat maps)
-# -------------------------------------------------------------------------------
-# function calculate the 0.95 'quantile' interval (based on the 0.025 and 0.975 quantile)
-funcQI <- function(data){
-  tmp <- quantile(data$SSRT_diff, probs = c(0.025, 0.975))
-  QI <- tmp[2]-tmp[1]
-  names(QI) <- 'interval'
-  return(QI)
-}
-
-# calculate the 0.95 'quantile' interval for each combo
-QI.data <- ddply(SSRT.diff.long, .(ntrials, tau, pmiss, e_method), funcQI)
-
-# use this for the heat maps 
-ggplot(data = QI.data, aes(x = tau, y = pmiss)) +
-  geom_raster(aes(fill = interval), interpolate = T) +
-  scale_fill_gradientn(colours = c("white", "black"))+
-  facet_grid(ntrials~e_method, labeller = label_both)+
-  labs(fill = "0.95 QI")
-
-# -----------------------------------------------------------------------------
-# STEP: determine the reliability of each method by correlating true SSRT with 
-# estimated SSRT
-# -----------------------------------------------------------------------------
-# function to calculate reliability coefficient 
+# ---- auxiliary function ----
+# function to calculate reliability coefficient (correlation between true SSRT and estimated SSRT)
 funcRC <- function(data){
-  tmp.standard <- cor(data$SSRTtrue,data$SSRTall)
-  tmp.resp <- cor(data$SSRTtrue,data$SSRTresp)
-  tmp.adj <- cor(data$SSRTtrue,data$SSRTadj)
-  tmp.mean <-  cor(data$SSRTtrue,data$SSRTmean)
+  tmp.standard <- data.frame(e_method="standard", RC = cor(data$SSRTtrue,data$SSRTall))
+  tmp.resp <- data.frame(e_method="respOnly", RC = cor(data$SSRTtrue,data$SSRTresp))
+  tmp.adj <- data.frame(e_method="prespAdj", RC = cor(data$SSRTtrue,data$SSRTadj))
+  tmp.mean <-  data.frame(e_method="mean", RC = cor(data$SSRTtrue,data$SSRTmean))
   
-  RC <- data.frame(standard = tmp.standard, respOnly = tmp.resp, prespAdj = tmp.adj, mean = tmp.mean)
+  RC <- rbind(tmp.standard,tmp.resp,tmp.adj,tmp.mean)
   return(RC)
 }
 
-# calculate the correlations for each combo
-RC.data <- ddply(data.subset, .(Ntrials, pmissReq, tau), funcRC) 
-RC.data.long <- melt(RC.data,
-                       id.vars=c("Ntrials", "pmissReq", "tau"), # ID variables - all the variables to keep but not split apart on
-                       measure.vars=c("standard", "respOnly", "prespAdj", "mean")) # The source columns
-colnames(RC.data.long) <- c('ntrials', 'pmiss', 'tau', 'e_method', 'RC') 
+# not really a function, but we will use this for various plots
+recurring.grid <- facet_grid(
+  e_method~Ntrials,
+  labeller = labeller(
+    Ntrials = c(`100` = "Total N: 100 (25 signals)", 
+               `200` = "Total N: 200 (50 signals)",
+               `400` = "Total N: 400 (100 signals)",
+               `800` = "Total N: 800 (200 signals)"),
+    e_method = c(`standard` = "Integration (all)", 
+               `mean` = "Mean"))
+  )
 
-
-ggplot(data = RC.data.long, aes(x = tau, y = pmiss)) +
-  geom_raster(aes(fill = RC), interpolate = TRUE) +
-  scale_fill_gradientn(colours = c("red", "yellow", "green"),limits =c(0,1))+
-    facet_grid(ntrials~e_method, labeller = label_both)
-
-
-# -----------------------------------------------------------------------------
-# STEP: do some checks at a group level: create groups of different sizes,
-# and check the 'true vs. estimated SSRT' difference (at group level)
-# -----------------------------------------------------------------------------
-
-# load the group data
-load('./processed_data/combined_group_data.Rdata')
-
-# put this in long format again
-group.diff.long <- melt(group.data,
-                       id.vars=c("sample", "Nsubject", "Ntrials", "pmissReq", "tau"), # ID variables - all the variables to keep but not split apart on
-                       measure.vars=c("SSRTall_diff", "SSRTresp_diff", "SSRTadj_diff", "SSRTmean_diff" ) # The source columns
-)
-
-# rename a few things
-colnames(group.diff.long) <- c('sample', 'nsubjects', 'ntrials', 'pmiss', 'tau', 'e_method', 'SSRT_diff') 
-levels(group.diff.long$e_method) <- c('standard', 'respOnly', 'prespAdj', 'mean')
-
-# summarise over samples
-group.diff.cast <- cast (group.diff.long, nsubjects * ntrials * tau * pmiss * e_method ~ ., mean) 
-names(group.diff.cast)[6] <- "SSRT_diff"
-
-test <- subset(group.diff.cast, e_method %in% c('standard','mean') & pmiss %nin% c('20'))
-
-tmp <- abs(test$SSRT_diff)
-li <- c(-max(tmp), max(tmp))
-
-
-# heat maps again
-p <- ggplot(data = test, aes(x = tau, y = pmiss)) +
-  geom_raster(aes(fill = SSRT_diff), interpolate = TRUE) +
-  scale_fill_gradientn(colours = c("blue", "white", "red"),limits=li)+
-  facet_grid(ntrials~e_method, labeller = label_both)
-
-# create the figures for all estimation methods  
-grp.plts <- dlply(test, .(nsubjects), function(x) p %+% x +
-                    facet_grid(nsubjects+ntrials~e_method, labeller = label_both))
-grp.plts
-
-
-ggplot(data = test, aes(x = tau, y = pmiss)) +
-  geom_raster(aes(fill = SSRT_diff), interpolate = TRUE) +
-  scale_fill_gradientn(colours = c("blue", "white", "red"),limits=li)+
-  facet_grid(ntrials~nsubjects+e_method, labeller = label_both)
-
-
-# -----------------------------------------------------------------------------
-# EXTRA: VIOLIN PLOTS TO SHOW THE DISTRIBUTIONS IN A DIFFERENT WAY  
-# -----------------------------------------------------------------------------
+# ---- get some more info about the subjects for whom signal-respond > no-signal RT ----
+  # check for each parameter combination  
+  violation.data <- ddply(data.old, .(Ntrials, tau, pmissReq), summarise, number=sum(violation)) 
+  violation.data$e_method <- '' # only need this to keep layout the same as other plots
   
-  # -----------------------------------------------------------------------------
-  # STEP: compare true SSRT and the estimated SSRT for each individual 
-  # and show the distribution of the difference scores (with violin plots)
-  # -----------------------------------------------------------------------------
-  v <- ggplot(SSRT.diff.long, aes(x=tau, y=SSRT_diff, fill=pmiss)) +
-    geom_violin(draw_quantiles= c(0.25, 0.5, 0.75), trim = T) +
-    facet_grid(.~e_method, labeller = label_both) +
-    ylim(-400, 500)
+  # calculate correlation collapsed across p(miss and tau)
+  collapsed.vd <- ddply(data.old, .(Ntrials), summarise, number=sum(violation))
+  plotC.text <- collapsed.vd
+  plotC.text$label <- paste("Total excl. = ", plotC.text$number) 
   
-  # create the figures for all estimation methods  
-  v.plots <- dlply(SSRT.diff.long, .(ntrials), function(x) v %+% x +
-                     facet_grid(.~ntrials+e_method, labeller = label_both))
-  v.plots 
+  # plot the data
+  violation.plot <- ggplot(data = violation.data, aes(x = tau, y = pmissReq)) +
+    geom_raster(aes(fill = number), interpolate = TRUE) +
+    scale_fill_gradientn(colours = c("gold", "black"))+
+    facet_grid(e_method~Ntrials, labeller = labeller(
+      Ntrials = c(`100` = "Total N: 100 (25 signals)", 
+                  `200` = "Total N: 200 (50 signals)",
+                  `400` = "Total N: 400 (100 signals)",
+                  `800` = "Total N: 800 (200 signals)")))+
+    geom_text(data=plotC.text, aes(x=1, y=1, label = label), hjust = 0,
+              colour="black", inherit.aes=FALSE, parse=FALSE)+
+    theme(strip.text=element_text(margin = margin(0.1,0.1,0.1,0.1, "cm")),
+          strip.background.y =element_rect(fill="white"))+
+    xlab('Tau of the no-signal RT distribution')+
+    ylab('Go failure (%)')+
+    labs(fill = "Number of\nexcluded subjects")
+  violation.plot
   
-  # create pdf version as well
-  pdf("./summary_data/violin_plots.pdf", paper="a4")
-  v.plots
-  dev.off()
+  # get an idea of how all this influences SSRT  
+  # violations occur primarily when tau is low, p(miss) is high, and number of trials is low
+  ddply(subset(data.old, Ntrials == 100 & tau %in% c('1', '50') & pmissReq %in% c(10, 15, 20)), 
+        .(Ntrials, violation), summarise, 
+        SSRTall_diff=mean(SSRTall_diff)) # bias for included vs. excluded subjects (standard integration method)
   
-  # -----------------------------------------------------------------------------
-  # STEP: do some checks at a group level: create groups of different sizes,
-  # and check the 'true vs. estimated SSRT' difference (at group level)
-  # -----------------------------------------------------------------------------
+  ddply(subset(data.old, Ntrials == 100 & tau %in% c('1', '50') & pmissReq %in% c(10, 15, 20)), 
+        .(Ntrials, violation), summarise, 
+        SSRTmean_diff=mean(SSRTmean_diff)) # bias for included vs. excluded subjects (mean method) 
+
+
+# ---- calculate the mean difference between true and estimated SSRT   ----
+  # (to determine if there are consistent biases)
+  indiv.mean <- ddply(indiv.long, .(Ntrials, tau, pmissReq, e_method), summarise, SSRT_diff=mean(SSRT_diff)) # calculate mean for all possible combinations
+  indiv.mean <- subset(indiv.mean, e_method %in% c('standard', 'mean')) # only show the standard integration approach and mean approach
+  plot.text <- ddply(indiv.mean, .(e_method,Ntrials), summarise, SSRT_diff.sd =sd(SSRT_diff)) # calculate standard deviations (to show as text in the plot)
+  plot.text$label <- paste("SD: ", round(plot.text$SSRT_diff.sd), "ms") # adjust the text label
+  plot.li <- c(-max(abs(indiv.mean$SSRT_diff)), max(abs(indiv.mean$SSRT_diff))) # ensure that 0 is in the middle of the range
   
+  # plot the data
+  indiv.mean.plot <- ggplot(data = indiv.mean, aes(x = tau, y = pmissReq)) +
+    geom_raster(aes(fill = SSRT_diff), interpolate = TRUE) +
+    scale_fill_gradientn(colours = c("blue", "white", "magenta"),limits =plot.li)+
+    recurring.grid+
+    geom_text(data=plot.text, aes(x=1, y=1, label = label), hjust = 0,
+              colour="black", inherit.aes=FALSE, parse=FALSE)+
+    xlab('Tau of the no-signal RT distribution')+
+    ylab('Go failure (%)')+
+    labs(fill = "Estimated -\n true SSRT")+
+    theme(strip.text=element_text(margin = margin(0.1,0.1,0.1,0.1, "cm")))
+  indiv.mean.plot
+    
+# ---- calculate the correlation between true and estimated SSRT ----
+  # (to check reliability of the estimates)
+  indiv.rc <- ddply(data, .(Ntrials, pmissReq, tau), funcRC)  # calculate correlation (via funcRC) for all possible combinations
+  indiv.rc <- subset(indiv.rc, e_method %in% c('standard', 'mean')) # only show the standard integration approach and mean approach
+
+  # calculate correlation collapsed across p(miss and tau)
+  collapsed.rc <- ddply(data, .(Ntrials), funcRC) # use funcRC (see above) for the calculations
+  collapsed.rc <- subset(collapsed.rc, e_method %in% c('standard', 'mean')) # only show the standard integration approach and mean approach
+  plotB.text <- arrange(collapsed.rc, e_method) # same order as indiv.rc
+  plotB.text$label <- paste(" Overall R = ", format(round(plotB.text$RC, 3), nsmall = 3)) # show the overall correlations as text
+
+  # plot the data
+  indiv.rc.plot <- ggplot(data = indiv.rc, aes(x = tau, y = pmissReq)) +
+    geom_raster(aes(fill = RC), interpolate = TRUE) +
+    scale_fill_gradientn(colours = c("red", "yellow", "green"),limits =c(0,1))+
+    recurring.grid +
+    geom_text(data=plotB.text, aes(x=1, y=1, label = label), hjust = 0,
+              colour="black", inherit.aes=FALSE, parse=FALSE) +
+    xlab('Tau of the no-signal RT distribution')+
+    ylab('Go failure (%)')+
+    labs(fill = "Estimated -\n true SSRT")+
+    theme(strip.text=element_text(margin = margin(0.1,0.1,0.1,0.1, "cm")))
+  indiv.rc.plot
   
-  # create another violon plot; we will create different plots for each level of p(miss)
-  # we will do this by creating a basic figure template, and then use this as a 'function' in dlply
-  p <- ggplot(group.diff.long, aes(x=tau, y=SSRT_diff, fill=pmiss)) +
-    geom_violin(draw_quantiles= c(0.25, 0.5, 0.75), trim = T) +
-    facet_grid(ntrials~e_method, labeller = label_both)
+# ---- combine some plots for the paper ----
+  violation.plot <- violation.plot+theme(axis.title.x=element_text(color='white'))
+  indiv.mean.plot <- indiv.mean.plot+theme(axis.title.x=element_text(color='white'))
+  plot_grid(violation.plot, indiv.mean.plot, indiv.rc.plot, 
+            labels=c("A", "B", "C"), ncol = 1, nrow = 3, align='v', axis='l', rel_heights=c(0.6,1,1))
   
-  # create the figures for all estimation methods  
-  grp.plts <- dlply(group.diff.long, .(nsubjects), function(x) p %+% x +
-                      facet_grid(nsubjects+ntrials~e_method, labeller = label_both))
+# ---- plot the distribution of the true-vs-estimated SSRT differences ----
+# create violin plots
+  violin.plot <- ggplot(indiv.long, aes(x=e_method, y=SSRT_diff, fill=e_method)) +
+    geom_hline(yintercept=0)+
+    geom_violin(trim = T) +
+    scale_fill_manual(labels = c("Integration\n(all)", "Integration\n(respond only)", "Integration\n(p adjusted)", "Mean"), 
+                      values = c('red', 'green', 'blue', 'yellow'))+
+    facet_grid(
+      Ntrials~pmissReq*tau,
+      labeller = labeller(
+        Ntrials = c(`100` = "Total N: 100 (25 signals)", 
+                    `200` = "Total N: 200 (50 signals)",
+                    `400` = "Total N: 400 (100 signals)",
+                    `800` = "Total N: 800 (200 signals)"),
+        pmissReq = c(`0` = "p(m):0",
+                     `5` = "p(m):5",
+                     `10` = "p(m):10",
+                     `15` = "p(m):15",
+                     `20` = "p(m):20"),
+        tau = c(`1` = "t:1",
+                `50` = "t:50",
+                `100` = "t:100",
+                `150` = "t:150",
+                `200` = "t:200")
+      )
+    ) +
+    theme(axis.title.x=element_blank(),
+          axis.text.x=element_blank(),
+          axis.ticks.x=element_blank(),
+          strip.text=element_text(size=10,margin = margin(0.1,0.1,0.1,0.1, "cm")),
+          legend.key.size = unit(2, 'lines'),
+          legend.text=element_text(size=10)
+          )+
+    labs(fill = "Estimation\nmethod")+
+    ylab('Estimated - true SSRT') 
   
-  # create pdfs as well
-  pdf("./summary_data/group_plots.pdf", paper="a4")
-  grp.plts
-  dev.off()
-  
-  # also put the quantile data in a csv file
-  q.cast <- cast (group.diff.long, nsubjects * ntrials * tau * pmiss ~ e_method, 
-                  function(x) round(quantile(x,c(0.025, 0.5, 0.975))))
-  write.csv(q.cast, "./summary_data/groups_quantiles.csv")
-  
-  
-  
-  # as the resp-only and Tannock method produce consistent biases, 
-  # we will exclude them from the next figure
-  group.diff.long.subset <- subset(group.diff.long, e_method %nin% c('respOnly', 'prespAdj'))
-  
-  grp.plts.subset <- dlply(group.diff.long.subset, .(nsubjects), function(x) p %+% x +
-                             facet_grid(nsubjects+ntrials~e_method, labeller = label_both))
-  
-  # create pdfs as well
-  pdf("./summary_data/group_plots_subset.pdf", paper="a4")
-  grp.plts.subset
-  dev.off()
-  
-  
+  violin.plot   
