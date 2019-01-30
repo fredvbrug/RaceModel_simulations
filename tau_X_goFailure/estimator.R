@@ -49,7 +49,7 @@ funcSignal <- function(data){
     presp_adj <- 1 - pinhibit_adj
 
     ## SSRT(integration) = nthRT - ssd
-    ## missed no-signal trials are INcluded in the go distribution
+    ## missed no-signal trials are EXcluded in the go distribution
     nthRT_adj <- quantile(nosignal$RT.true, probs = presp_adj, type = 6)
     SSRTadj <- nthRT_adj - ssd
     SSRTadj_diff <- SSRTadj - SSRTtrue # calculate the difference with the true SSRT

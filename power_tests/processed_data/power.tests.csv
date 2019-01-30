@@ -1,193 +1,193 @@
 "","NSubjects","achieved_power","simulation","sim.number","ntrials","label"
-"1","32",0.375,"simulation_set_1_processed",1,200,"N =200; True SSRT ∆ = 15 ms
+"1","32",0.35,"simulation_set_1_processed",1,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"2","64",0.645,"simulation_set_1_processed",1,200,"N =200; True SSRT ∆ = 15 ms
+"2","64",0.622,"simulation_set_1_processed",1,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"3","96",0.796,"simulation_set_1_processed",1,200,"N =200; True SSRT ∆ = 15 ms
+"3","96",0.8,"simulation_set_1_processed",1,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"4","128",0.888,"simulation_set_1_processed",1,200,"N =200; True SSRT ∆ = 15 ms
+"4","128",0.929,"simulation_set_1_processed",1,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"5","160",0.973,"simulation_set_1_processed",1,200,"N =200; True SSRT ∆ = 15 ms
+"5","160",0.972,"simulation_set_1_processed",1,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"6","192",0.979,"simulation_set_1_processed",1,200,"N =200; True SSRT ∆ = 15 ms
+"6","192",0.987,"simulation_set_1_processed",1,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"7","32",0.907,"simulation_set_2_processed",2,200,"N =200; True SSRT ∆ = 30 ms
+"7","32",0.9,"simulation_set_2_processed",2,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"8","64",0.998,"simulation_set_2_processed",2,200,"N =200; True SSRT ∆ = 30 ms
+"8","64",0.995,"simulation_set_2_processed",2,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"9","96",1,"simulation_set_2_processed",2,200,"N =200; True SSRT ∆ = 30 ms
+"9","96",0.999,"simulation_set_2_processed",2,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"10","128",1,"simulation_set_2_processed",2,200,"N =200; True SSRT ∆ = 30 ms
+"10","128",1,"simulation_set_2_processed",2,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"11","160",1,"simulation_set_2_processed",2,200,"N =200; True SSRT ∆ = 30 ms
+"11","160",1,"simulation_set_2_processed",2,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"12","192",1,"simulation_set_2_processed",2,200,"N =200; True SSRT ∆ = 30 ms
+"12","192",1,"simulation_set_2_processed",2,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"13","32",0.22,"simulation_set_3_processed",3,200,"N =200; True SSRT ∆ = 15 ms
+"13","32",0.216,"simulation_set_3_processed",3,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"14","64",0.381,"simulation_set_3_processed",3,200,"N =200; True SSRT ∆ = 15 ms
+"14","64",0.394,"simulation_set_3_processed",3,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"15","96",0.538,"simulation_set_3_processed",3,200,"N =200; True SSRT ∆ = 15 ms
+"15","96",0.531,"simulation_set_3_processed",3,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"16","128",0.681,"simulation_set_3_processed",3,200,"N =200; True SSRT ∆ = 15 ms
+"16","128",0.678,"simulation_set_3_processed",3,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"17","160",0.789,"simulation_set_3_processed",3,200,"N =200; True SSRT ∆ = 15 ms
+"17","160",0.804,"simulation_set_3_processed",3,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"18","192",0.86,"simulation_set_3_processed",3,200,"N =200; True SSRT ∆ = 15 ms
+"18","192",0.862,"simulation_set_3_processed",3,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"19","32",0.653,"simulation_set_4_processed",4,200,"N =200; True SSRT ∆ = 30 ms
+"19","32",0.665,"simulation_set_4_processed",4,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"20","64",0.916,"simulation_set_4_processed",4,200,"N =200; True SSRT ∆ = 30 ms
+"20","64",0.922,"simulation_set_4_processed",4,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"21","96",0.986,"simulation_set_4_processed",4,200,"N =200; True SSRT ∆ = 30 ms
+"21","96",0.988,"simulation_set_4_processed",4,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"22","128",0.997,"simulation_set_4_processed",4,200,"N =200; True SSRT ∆ = 30 ms
+"22","128",0.997,"simulation_set_4_processed",4,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"23","160",1,"simulation_set_4_processed",4,200,"N =200; True SSRT ∆ = 30 ms
+"23","160",1,"simulation_set_4_processed",4,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"24","192",1,"simulation_set_4_processed",4,200,"N =200; True SSRT ∆ = 30 ms
+"24","192",1,"simulation_set_4_processed",4,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"25","32",0.208,"simulation_set_5_processed",5,200,"N =200; True SSRT ∆ = 15 ms
+"25","32",0.221,"simulation_set_5_processed",5,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"26","64",0.381,"simulation_set_5_processed",5,200,"N =200; True SSRT ∆ = 15 ms
+"26","64",0.37,"simulation_set_5_processed",5,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"27","96",0.53,"simulation_set_5_processed",5,200,"N =200; True SSRT ∆ = 15 ms
+"27","96",0.526,"simulation_set_5_processed",5,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"28","128",0.668,"simulation_set_5_processed",5,200,"N =200; True SSRT ∆ = 15 ms
+"28","128",0.657,"simulation_set_5_processed",5,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"29","160",0.771,"simulation_set_5_processed",5,200,"N =200; True SSRT ∆ = 15 ms
+"29","160",0.77,"simulation_set_5_processed",5,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"30","192",0.85,"simulation_set_5_processed",5,200,"N =200; True SSRT ∆ = 15 ms
+"30","192",0.842,"simulation_set_5_processed",5,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"31","32",0.628,"simulation_set_6_processed",6,200,"N =200; True SSRT ∆ = 30 ms
+"31","32",0.629,"simulation_set_6_processed",6,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"32","64",0.898,"simulation_set_6_processed",6,200,"N =200; True SSRT ∆ = 30 ms
+"32","64",0.908,"simulation_set_6_processed",6,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"33","96",0.98,"simulation_set_6_processed",6,200,"N =200; True SSRT ∆ = 30 ms
+"33","96",0.978,"simulation_set_6_processed",6,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"34","128",0.998,"simulation_set_6_processed",6,200,"N =200; True SSRT ∆ = 30 ms
+"34","128",0.998,"simulation_set_6_processed",6,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"35","160",0.999,"simulation_set_6_processed",6,200,"N =200; True SSRT ∆ = 30 ms
+"35","160",1,"simulation_set_6_processed",6,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"36","192",1,"simulation_set_6_processed",6,200,"N =200; True SSRT ∆ = 30 ms
+"36","192",1,"simulation_set_6_processed",6,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"37","32",0.047,"simulation_set_7_processed",7,200,"N =200; True SSRT ∆ = 15 ms
+"37","32",0.071,"simulation_set_7_processed",7,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"38","64",0.067,"simulation_set_7_processed",7,200,"N =200; True SSRT ∆ = 15 ms
+"38","64",0.06,"simulation_set_7_processed",7,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"39","96",0.078,"simulation_set_7_processed",7,200,"N =200; True SSRT ∆ = 15 ms
+"39","96",0.072,"simulation_set_7_processed",7,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"40","128",0.096,"simulation_set_7_processed",7,200,"N =200; True SSRT ∆ = 15 ms
+"40","128",0.072,"simulation_set_7_processed",7,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"41","160",0.092,"simulation_set_7_processed",7,200,"N =200; True SSRT ∆ = 15 ms
+"41","160",0.083,"simulation_set_7_processed",7,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"42","192",0.1,"simulation_set_7_processed",7,200,"N =200; True SSRT ∆ = 15 ms
+"42","192",0.1,"simulation_set_7_processed",7,200,"N = 200; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"43","32",0.293,"simulation_set_8_processed",8,200,"N =200; True SSRT ∆ = 30 ms
+"43","32",0.284,"simulation_set_8_processed",8,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"44","64",0.481,"simulation_set_8_processed",8,200,"N =200; True SSRT ∆ = 30 ms
+"44","64",0.488,"simulation_set_8_processed",8,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"45","96",0.685,"simulation_set_8_processed",8,200,"N =200; True SSRT ∆ = 30 ms
+"45","96",0.641,"simulation_set_8_processed",8,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"46","128",0.816,"simulation_set_8_processed",8,200,"N =200; True SSRT ∆ = 30 ms
+"46","128",0.816,"simulation_set_8_processed",8,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"47","160",0.896,"simulation_set_8_processed",8,200,"N =200; True SSRT ∆ = 30 ms
+"47","160",0.894,"simulation_set_8_processed",8,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"48","192",0.954,"simulation_set_8_processed",8,200,"N =200; True SSRT ∆ = 30 ms
+"48","192",0.944,"simulation_set_8_processed",8,200,"N = 200; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"49","32",0.519,"simulation_set_9_processed",9,400,"N =400; True SSRT ∆ = 15 ms
+"49","32",0.516,"simulation_set_9_processed",9,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"50","64",0.801,"simulation_set_9_processed",9,400,"N =400; True SSRT ∆ = 15 ms
+"50","64",0.814,"simulation_set_9_processed",9,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"51","96",0.943,"simulation_set_9_processed",9,400,"N =400; True SSRT ∆ = 15 ms
+"51","96",0.946,"simulation_set_9_processed",9,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"52","128",0.985,"simulation_set_9_processed",9,400,"N =400; True SSRT ∆ = 15 ms
+"52","128",0.986,"simulation_set_9_processed",9,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"53","160",0.993,"simulation_set_9_processed",9,400,"N =400; True SSRT ∆ = 15 ms
+"53","160",0.996,"simulation_set_9_processed",9,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"54","192",0.999,"simulation_set_9_processed",9,400,"N =400; True SSRT ∆ = 15 ms
+"54","192",0.999,"simulation_set_9_processed",9,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"55","32",0.875,"simulation_set_10_processed",10,400,"N =400; True SSRT ∆ = 30 ms
+"55","32",0.859,"simulation_set_10_processed",10,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"56","64",0.994,"simulation_set_10_processed",10,400,"N =400; True SSRT ∆ = 30 ms
+"56","64",0.993,"simulation_set_10_processed",10,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"57","96",0.999,"simulation_set_10_processed",10,400,"N =400; True SSRT ∆ = 30 ms
+"57","96",0.999,"simulation_set_10_processed",10,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"58","128",1,"simulation_set_10_processed",10,400,"N =400; True SSRT ∆ = 30 ms
+"58","128",1,"simulation_set_10_processed",10,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"59","160",1,"simulation_set_10_processed",10,400,"N =400; True SSRT ∆ = 30 ms
+"59","160",1,"simulation_set_10_processed",10,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"60","192",1,"simulation_set_10_processed",10,400,"N =400; True SSRT ∆ = 30 ms
+"60","192",1,"simulation_set_10_processed",10,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .0"
-"61","32",0.172,"simulation_set_11_processed",11,400,"N =400; True SSRT ∆ = 15 ms
+"61","32",0.157,"simulation_set_11_processed",11,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"62","64",0.291,"simulation_set_11_processed",11,400,"N =400; True SSRT ∆ = 15 ms
+"62","64",0.281,"simulation_set_11_processed",11,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"63","96",0.365,"simulation_set_11_processed",11,400,"N =400; True SSRT ∆ = 15 ms
+"63","96",0.396,"simulation_set_11_processed",11,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"64","128",0.488,"simulation_set_11_processed",11,400,"N =400; True SSRT ∆ = 15 ms
+"64","128",0.463,"simulation_set_11_processed",11,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"65","160",0.599,"simulation_set_11_processed",11,400,"N =400; True SSRT ∆ = 15 ms
+"65","160",0.601,"simulation_set_11_processed",11,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"66","192",0.665,"simulation_set_11_processed",11,400,"N =400; True SSRT ∆ = 15 ms
+"66","192",0.668,"simulation_set_11_processed",11,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"67","32",0.881,"simulation_set_12_processed",12,400,"N =400; True SSRT ∆ = 30 ms
+"67","32",0.873,"simulation_set_12_processed",12,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"68","64",0.994,"simulation_set_12_processed",12,400,"N =400; True SSRT ∆ = 30 ms
+"68","64",0.996,"simulation_set_12_processed",12,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"69","96",0.999,"simulation_set_12_processed",12,400,"N =400; True SSRT ∆ = 30 ms
+"69","96",0.999,"simulation_set_12_processed",12,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"70","128",1,"simulation_set_12_processed",12,400,"N =400; True SSRT ∆ = 30 ms
+"70","128",1,"simulation_set_12_processed",12,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"71","160",1,"simulation_set_12_processed",12,400,"N =400; True SSRT ∆ = 30 ms
+"71","160",1,"simulation_set_12_processed",12,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"72","192",1,"simulation_set_12_processed",12,400,"N =400; True SSRT ∆ = 30 ms
+"72","192",1,"simulation_set_12_processed",12,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .0"
-"73","32",0.196,"simulation_set_13_processed",13,400,"N =400; True SSRT ∆ = 15 ms
+"73","32",0.175,"simulation_set_13_processed",13,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"74","64",0.338,"simulation_set_13_processed",13,400,"N =400; True SSRT ∆ = 15 ms
+"74","64",0.351,"simulation_set_13_processed",13,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"75","96",0.504,"simulation_set_13_processed",13,400,"N =400; True SSRT ∆ = 15 ms
+"75","96",0.479,"simulation_set_13_processed",13,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"76","128",0.645,"simulation_set_13_processed",13,400,"N =400; True SSRT ∆ = 15 ms
+"76","128",0.613,"simulation_set_13_processed",13,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"77","160",0.741,"simulation_set_13_processed",13,400,"N =400; True SSRT ∆ = 15 ms
+"77","160",0.707,"simulation_set_13_processed",13,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"78","192",0.809,"simulation_set_13_processed",13,400,"N =400; True SSRT ∆ = 15 ms
+"78","192",0.813,"simulation_set_13_processed",13,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"79","32",0.808,"simulation_set_14_processed",14,400,"N =400; True SSRT ∆ = 30 ms
+"79","32",0.758,"simulation_set_14_processed",14,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"80","64",0.964,"simulation_set_14_processed",14,400,"N =400; True SSRT ∆ = 30 ms
+"80","64",0.974,"simulation_set_14_processed",14,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"81","96",0.998,"simulation_set_14_processed",14,400,"N =400; True SSRT ∆ = 30 ms
+"81","96",0.997,"simulation_set_14_processed",14,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"82","128",1,"simulation_set_14_processed",14,400,"N =400; True SSRT ∆ = 30 ms
+"82","128",1,"simulation_set_14_processed",14,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"83","160",1,"simulation_set_14_processed",14,400,"N =400; True SSRT ∆ = 30 ms
+"83","160",1,"simulation_set_14_processed",14,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"84","192",1,"simulation_set_14_processed",14,400,"N =400; True SSRT ∆ = 30 ms
+"84","192",1,"simulation_set_14_processed",14,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 0 ms; P(miss) ∆ = .10"
-"85","32",0.092,"simulation_set_15_processed",15,400,"N =400; True SSRT ∆ = 15 ms
+"85","32",0.069,"simulation_set_15_processed",15,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"86","64",0.094,"simulation_set_15_processed",15,400,"N =400; True SSRT ∆ = 15 ms
+"86","64",0.094,"simulation_set_15_processed",15,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"87","96",0.118,"simulation_set_15_processed",15,400,"N =400; True SSRT ∆ = 15 ms
+"87","96",0.099,"simulation_set_15_processed",15,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"88","128",0.129,"simulation_set_15_processed",15,400,"N =400; True SSRT ∆ = 15 ms
+"88","128",0.12,"simulation_set_15_processed",15,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"89","160",0.133,"simulation_set_15_processed",15,400,"N =400; True SSRT ∆ = 15 ms
+"89","160",0.138,"simulation_set_15_processed",15,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"90","192",0.147,"simulation_set_15_processed",15,400,"N =400; True SSRT ∆ = 15 ms
+"90","192",0.179,"simulation_set_15_processed",15,400,"N = 400; True SSRT ∆ = 15 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"91","32",0.383,"simulation_set_16_processed",16,400,"N =400; True SSRT ∆ = 30 ms
+"91","32",0.398,"simulation_set_16_processed",16,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"92","64",0.668,"simulation_set_16_processed",16,400,"N =400; True SSRT ∆ = 30 ms
+"92","64",0.663,"simulation_set_16_processed",16,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"93","96",0.838,"simulation_set_16_processed",16,400,"N =400; True SSRT ∆ = 30 ms
+"93","96",0.831,"simulation_set_16_processed",16,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"94","128",0.928,"simulation_set_16_processed",16,400,"N =400; True SSRT ∆ = 30 ms
+"94","128",0.924,"simulation_set_16_processed",16,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"95","160",0.979,"simulation_set_16_processed",16,400,"N =400; True SSRT ∆ = 30 ms
+"95","160",0.965,"simulation_set_16_processed",16,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"
-"96","192",0.996,"simulation_set_16_processed",16,400,"N =400; True SSRT ∆ = 30 ms
+"96","192",0.99,"simulation_set_16_processed",16,400,"N = 400; True SSRT ∆ = 30 ms
 GoRT ∆ = 150 ms; P(miss) ∆ = .10"

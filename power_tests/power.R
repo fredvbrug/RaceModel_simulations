@@ -104,7 +104,7 @@ sim.info$miss.difference <- (sim.info$G2_Gmiss) - (sim.info$G1_Gmiss)
 
 # now put this extra info in the achieved power data frame
 ach.power.combined$ntrials <-  sim.info[ach.power.combined$sim.number, 'ntrials']
-ach.power.combined$label <-  paste('N =', sim.info[ach.power.combined$sim.number, 'ntrials'],
+ach.power.combined$label <-  paste('N = ', sim.info[ach.power.combined$sim.number, 'ntrials'],
                                    '; True SSRT ∆ = ', sim.info[ach.power.combined$sim.number, 'SSRT.difference'], ' ms',
                                    '\nGoRT ∆ = ', sim.info[ach.power.combined$sim.number, 'GORT.difference'], ' ms',
                                    '; P(miss) ∆ = .', sim.info[ach.power.combined$sim.number, 'miss.difference'],
@@ -120,6 +120,14 @@ write.csv(ach.power.combined, './processed_data/power.tests.csv')
 rm(list = ls()) 
 load('./processed_data/power.tests.Rdata')     
 
+# adjust labels again for figure (will put true SSRT difference in y-axis label)
+ach.power.combined$label2 <-  paste('Total N = ', sim.info[ach.power.combined$sim.number, 'ntrials'],
+                                    '\n(stop signals = ', sim.info[ach.power.combined$sim.number, 'ntrials']/4, ')',
+                                   '\nGoRT ∆ = ', sim.info[ach.power.combined$sim.number, 'GORT.difference'], ' ms',
+                                   '\nP(miss) ∆ = .', sim.info[ach.power.combined$sim.number, 'miss.difference'],
+                                   sep="")
+
+
 # show in a graph (but use different subpanels for small and large SSRT differences)
 SSRT15 <- subset(ach.power.combined, sim.number %% 2 == 1)
 SSRT30 <- subset(ach.power.combined, sim.number %% 2 == 0)
@@ -127,18 +135,18 @@ SSRT30 <- subset(ach.power.combined, sim.number %% 2 == 0)
 A <-  ggplot(data=SSRT15, aes(x=NSubjects, y=achieved_power)) +
     geom_bar(stat="identity")+
     geom_hline(yintercept = .80, colour = 'red')+
-    facet_wrap(~label,ncol=4,nrow=4) +
-    ylab('Achieved power')+
+    facet_wrap(~label2,ncol=4,nrow=4) +
+    ylab('Achieved power when true SSRT ∆ = 15 ms')+
     xlab('Number of subjects per group')+
     theme_bw()
     
-B <- A %+% SSRT30
+B <- A %+% SSRT30 + ylab('Achieved power when true SSRT ∆ = 30 ms')
 
 # combine two plots  
 AB <- plot_grid(A, B,labels=c("A", "B"), ncol = 1, nrow = 2, align = 'hv')
 AB
 
-ggsave(filename="./summary_data/power.plot.eps", plot=AB, device=cairo_pdf,
-       height = 210, width = 297, units = "mm", dpi = 600)
+ggsave(filename="./summary_data/power.plot.eps", plot=AB, device=cairo_ps,
+       height = 297, width = 210, units = "mm", dpi = 1200)
   
 
