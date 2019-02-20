@@ -23,9 +23,6 @@ indiv.long <- melt(data,
 colnames(indiv.long)[5:6] <- c('e_method', 'SSRT_diff') # change a few names
 levels(indiv.long$e_method) <- c('standard', 'respOnly', 'prespAdj', 'mean')
 
-# reorder levels ntrials
-data$Ntrials = factor(data$Ntrials,levels(data$Ntrials)[c(4,3,2,1)])
-
 # ---- auxiliary function ----
 # function to calculate reliability coefficient (correlation between true SSRT and estimated SSRT)
 funcRC <- function(data){
@@ -59,34 +56,28 @@ common_theme <- function(){
 recurring.grid <- facet_grid(
   Ntrials~e_method,
   labeller = labeller(
-    Ntrials = c(`100` = "Total N: 100\n(25 signals)", 
-               `200` = "Total N: 200\n(50 signals)",
-               `400` = "Total N: 400\n(100 signals)",
-               `800` = "Total N: 800\n(200 signals)"),
+    Ntrials = c(`100` = "Total N: 100\n(25 stop signals)", 
+               `200` = "Total N: 200\n(50 stop signals)",
+               `400` = "Total N: 400\n(100 stop signals)",
+               `800` = "Total N: 800\n(200 stop signals)"),
     e_method = c(`standard` = "Integration\n(w. replacement)", 
                `mean` = "Mean"))
   )
 
 # ---- get some more info about the subjects for whom signal-respond > no-signal RT ----
   # check for each parameter combination  
-  violation.data <- ddply(data.old, .(Ntrials, tau, pmissReq), summarise, number=sum(violation)) 
+  violation.data <- ddply(data.old, .(Ntrials, tau, pmissReq), summarise, number=mean(violation)) 
+  violation.data$number <- violation.data$number * 100
   violation.data$e_method <- 'standard' # only need this to keep layout the same as other plots
-  
-  # calculate correlation collapsed across p(miss and tau)
-  collapsed.vd <- ddply(data.old, .(Ntrials), summarise, number=sum(violation))
-  plotC.text <- collapsed.vd
-  plotC.text$label <- paste("Total:", plotC.text$number) 
   
   # plot the data
   violation.plot <- ggplot(data = violation.data, aes(x = tau, y = pmissReq)) +
     geom_raster(aes(fill = number), interpolate = TRUE) +
-    scale_fill_gradientn(colours = c("gold", "black"))+
+    scale_fill_gradientn(colours = c("#E69F00", "#000000"))+
     recurring.grid +
-    geom_text(data=plotC.text, aes(x=1, y=1, label = label), hjust = 0,
-              colour="black", inherit.aes=FALSE, parse=FALSE, size = 3)+
     xlab('Tau of the\ngo RT distribution')+
-    ylab('Go failure (%)')+
-    labs(title = "Number of\nexcl. subjects") +
+    ylab('Go omission (%)')+
+    labs(title = "Percentage of\nexcl. subjects") +
     common_theme()+
     theme(strip.background.x =element_rect(fill="white"),
           strip.text.x = element_text(color = "white"),
@@ -123,12 +114,12 @@ recurring.grid <- facet_grid(
   # plot the data
   indiv.mean.plot <- ggplot(data = indiv.mean, aes(x = tau, y = pmissReq)) +
     geom_raster(aes(fill = SSRT_diff), interpolate = TRUE) +
-    scale_fill_gradientn(colours = c("blue", "white", "magenta"),limits =plot.li)+
+    scale_fill_gradientn(colours = c("#0072B2", "white", "#CC79A7"),limits =plot.li)+
     recurring.grid +
     geom_text(data=plot.text, aes(x=1, y=1, label = label), hjust = 0,
               colour="black", inherit.aes=FALSE, parse=FALSE, size = 3)+
     xlab('Tau of the\ngo RT distribution')+
-    ylab('Go failure (%)')+
+    ylab('Go omission (%)')+
     labs(title = "Difference (in ms)\nestimated - true SSRT")+
     common_theme()
     
@@ -149,12 +140,12 @@ recurring.grid <- facet_grid(
   # plot the data
   indiv.rc.plot <- ggplot(data = indiv.rc, aes(x = tau, y = pmissReq)) +
     geom_raster(aes(fill = RC), interpolate = TRUE) +
-    scale_fill_gradientn(colours = c("red", "yellow", "green"),limits =c(0,1))+
+    scale_fill_gradientn(colours = c("#D55E00", "white", "#009E73"),limits =c(0,1))+
     recurring.grid +
     geom_text(data=plotB.text, aes(x=1, y=1.5, label = label), hjust = 0,
               colour="black", inherit.aes=FALSE, parse=FALSE, size = 3) +
     xlab('Tau of the\ngo RT distribution')+
-    ylab('Go failure (%)')+
+    ylab('Go omission (%)')+
     labs(title = "Correlation\nestimated - true SSRT")+
     common_theme()
   indiv.rc.plot
@@ -186,11 +177,11 @@ recurring.grid <- facet_grid(
     violin.ntrials1 <- ggplot(ntrials1, aes(x=pmissReq, y = SSRT_diff, fill=e_method)) +
       geom_violin(trim = TRUE) +
       geom_hline(yintercept=0, colour="grey30")+
-      scale_fill_manual(labels = c("Integration\nwith\nreplacement", 
-                                   "Integration\nwithout\nreplacement", 
+      scale_fill_manual(labels = c("Integration\nomissions\nreplaced", 
+                                   "Integration\nomissions\nexcluded", 
                                    "Integration\np(respond|signal)\nadjusted", 
                                    "Mean"), 
-                        values = c('red', 'green', 'blue', 'yellow'))+
+                        values = c('#E69F00', '#56B4E9', '#009E73', '#CC79A7'))+
       facet_grid(.~tau,
         labeller = labeller(
           tau = c(`1` = "tau go = 1",
@@ -213,14 +204,14 @@ recurring.grid <- facet_grid(
             text = element_text(size = theme_size)
             )+
       labs(fill = "Estimation\nmethod") +
-      xlab('Go failure (%)') +
+      xlab('Go omission (%)') +
       ylab('Difference estimated - true SSRT (in ms)') +
       coord_flip() +
-      labs(title = "A. Total N: 100 (25 signals)")
+      labs(title = "A. Total N: 100 (25 stop signals)")
 
-    violin.ntrials2 <- violin.ntrials1 %+% ntrials2 + labs(title = "B. Total N: 200 (50 signals)")
-    violin.ntrials3 <- violin.ntrials1 %+% ntrials3 + labs(title = "C. Total N: 400 (100 signals)")
-    violin.ntrials4 <- violin.ntrials1 %+% ntrials4 + labs(title = "D. Total N: 800 (200 signals)")
+    violin.ntrials2 <- violin.ntrials1 %+% ntrials2 + labs(title = "B. Total N: 200 (50 stop signals)")
+    violin.ntrials3 <- violin.ntrials1 %+% ntrials3 + labs(title = "C. Total N: 400 (100 stop signals)")
+    violin.ntrials4 <- violin.ntrials1 %+% ntrials4 + labs(title = "D. Total N: 800 (200 stop signals)")
     
     violin.ntrials1   
     violin.ntrials2
@@ -236,39 +227,5 @@ recurring.grid <- facet_grid(
   ggsave(filename="./summary_data/violin.ntrials4.eps", plot=violin.ntrials4,
          height = 16, width = 16, units = "cm", dpi = 1200)
   
-# ---- plot all correlations for the appendix ----
-indiv.rc.all$Ntrials = factor(indiv.rc.all$Ntrials,levels(indiv.rc.all$Ntrials)[c(4,3,2,1)])
-
-# calculate correlation collapsed across p(miss and tau)
-collapsed.rc <- ddply(data, .(Ntrials), funcRC) # use funcRC (see above) for the calculations
-plotB.text <- arrange(collapsed.rc, e_method) # same order as indiv.rc
-plotB.text$label <- paste("Overall\nR: ", format(round(plotB.text$RC, 3), nsmall = 3)) # show the overall correlations as text
-  
-rc.plot.all <-  ggplot(data = indiv.rc.all, aes(x = tau, y = pmissReq)) +
-    geom_raster(aes(fill = RC), interpolate = TRUE) +
-    scale_fill_gradientn(colours = c("red", "yellow", "green"),limits =c(0,1))+
-    geom_text(data=plotB.text, aes(x=1, y=1.5, label = label), hjust = 0,
-            colour="black", inherit.aes=FALSE, parse=FALSE, size = 3) +
-    facet_grid(
-      e_method~Ntrials,
-      labeller = labeller(
-        Ntrials = c(`100` = "Total N: 100\n(25 signals)", 
-                    `200` = "Total N: 200\n(50 signals)",
-                    `400` = "Total N: 400\n(100 signals)",
-                    `800` = "Total N: 800\n(200 signals)"),
-        e_method = c(`standard` = "Integration\nwith\nreplacement", 
-                     `respOnly` = "Integration\nwithout\nreplacement",
-                     `prespAdj` = "Integration\np(rrespond|signal)\nadjusted",
-                     `mean` = "Mean"))
-    )+
-    xlab('Tau of the\ngo RT distribution')+
-    ylab('Go failure (%)')+
-    labs(title = "Correlation estimated - true SSRT")+
-    common_theme()
-rc.plot.all  
-
-ggsave(filename="./summary_data/rc.plot.all.eps", plot=rc.plot.all,
-       height = 18, width = 16, units = "cm", dpi = 1200)  
-
-# overall correlations
+# ---- calculate all correlations for the appendix ----
 funcRC(data)

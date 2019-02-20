@@ -119,8 +119,8 @@ pRT <- data.frame (mu = RT.mu, sdpop = RT.sdpop, sigma = RT.sigma,
 # determine shape of SSRT distrbution
 SSRT.mu = 200 #mean of normal part of RT distribution
 SSRT.sdpop = 20 # to allow within-group differences, mean SSRT(simulation) = random value from normal population distribution with SD
-SSRT.sigma = 15 #standard deviation of normal part of SSRT distribution
-SSRT.tau = 30 # mean of exponential part of the SSRT distribition
+SSRT.sigma = 20 #standard deviation of normal part of SSRT distribution
+SSRT.tau = 10 # mean of exponential part of the SSRT distribition
 pSSRT <- data.frame (mu = SSRT.mu, sdpop = SSRT.sdpop, sigma = SSRT.sigma, tau = SSRT.tau) # combine everything
 
 # ---- do the simulations for all possible combinations of parameters ----
