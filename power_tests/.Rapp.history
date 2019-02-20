@@ -1,4 +1,0 @@
-load ('simulated_data/simulation_set_1.Rdata')
-ls()
-simulation
-head(simulation, 100)
