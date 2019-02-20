@@ -10,12 +10,14 @@ In a first set of simulations ('tau_x_omission' folder), we compared different S
 
 The folder also contains three subfolders:
 
-- */simulated_data*: this folder contains the simulated data reported in the manuscript. When new simulations are run, the data will appear in this folder (the old files will be overwritten).
+- */simulated_data*: this folder contains the simulated data reported in the manuscript. When new simulations are run, the data will appear in this folder.
 - */processed_data*: this folder contains the relevant (averaged) go and stop estimates for each simulated 'participant'
 - */summary_data*: this folder contains the plots with the data summaries (as reported in the manuscript).
 
+Note that data in the 'simulated_data' folder will be overwritten when new simulations are run; data in the two other folders will be overwritten when the new data are processed and summarised. 
+
 ### The 'power_tests' folder
-The second set of simulations ('power_tests' folder) explored how different parameters affected the power to detect SSRT differences. This code can be adjusted to determine the required sample size under varying conditions, or acceptable levels of go omissions and RT distribution skew.
+The second set of simulations ('power_tests' folder) explored how different parameters affected the power to detect SSRT differences. This code can be adjusted to determine (1) required sample size under varying conditions and (2) acceptable levels of go omissions and RT distribution skew.
 
 In the main 'power_tests' folder, three R scripts can be found:
 
@@ -25,6 +27,8 @@ In the main 'power_tests' folder, three R scripts can be found:
 
 The folder also contains three subfolders:
 
-- */simulated_data*: this folder contains the simulated data reported in the manuscript. When new simulations are run, the data will appear in this folder (and old files are overwritten).
+- */simulated_data*: this folder contains the simulated data reported in the manuscript. When new simulations are run, the data will appear in this folder.
 - */processed_data*: this folder contains the achieved power estimates, as determined by the first part of the power.R script. These data are saved in case the figures (second part of the power.R script) have to be updated (without having to run the power calculations again).
 - */summary_data*: this folder contains the plots with the data summaries (as reported in the manuscript).
+
+Note that data in the 'simulated_data' folder will be overwritten when new simulations are run; data in the two other folders will be overwritten when new effect sizes and observed power are estimated. 
